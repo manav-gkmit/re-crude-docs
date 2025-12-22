@@ -10,7 +10,6 @@ Zoho ATS Update
 ↓
 PostgreSQL
 
-
 ## Architectural Principles
 - Event-driven processing
 - Idempotent updates
