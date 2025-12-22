@@ -1,0 +1,41 @@
+site_name: Re:Crude – Technical Documentation
+site_description: System Design & Architecture for Hiring Automation Platform
+site_author: Engineering Team
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - content.code.copy
+  palette:
+    scheme: default
+    primary: indigo
+    accent: indigo
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Overview: overview.md
+  - Requirements: requirements.md
+  - Architecture: architecture.md
+  - Technology Stack: tech-stack.md
+  - Modules:
+      - Zoho Polling & Batch Manager: modules/zoho_polling.md
+      - Resume Processing & Queueing: modules/resume_processing.md
+      - LLM Resume Evaluation: modules/llm_evaluation.md
+      - Communication Service: modules/communication.md
+      - Feedback Processing: modules/feedback.md
+      - Reminder Service: modules/reminders.md
+  
+  - Future Scope: future-scope.md
