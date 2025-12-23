@@ -1,19 +1,22 @@
 # System Architecture
 
-This document describes the **high-level system architecture** of the Hiring Application (Re:Crude), outlining its components, data flow, and interactions between internal services and external integrations.
+This document describes the **high-level system architecture** of **Re:Crude**, outlining its components, execution flow, and interactions between internal services and external integrations.
 
 ---
 
 ## 1. Architecture Overview
 
-Re:Crude is an **event-driven, modular recruitment automation platform** that integrates:
+Re:Crude is an **event-driven, modular recruitment automation platform** designed to automate resume screening, candidate evaluation, and interview feedback workflows.
 
-- Zoho ATS as the system of record
-- LLM-based services for resume and feedback evaluation
-- Asynchronous processing using queues
-- Slack and Email for reviewer communication
+The architecture is built around:
 
-The architecture is designed for **scalability, traceability, and extensibility**, supporting high-volume hiring workflows with minimal manual intervention.
+- A **scheduled or event-based trigger** to initiate hiring workflows  
+- Zoho ATS as the **system of record**  
+- Asynchronous processing using queues for scalability  
+- LLM-based services for resume and feedback evaluation  
+- Slack and Email for human-in-the-loop communication  
+
+This design ensures **scalability, traceability, fault tolerance, and extensibility** across high-volume hiring scenarios.
 
 ---
 
@@ -21,6 +24,9 @@ The architecture is designed for **scalability, traceability, and extensibility*
 
 ```mermaid
 flowchart LR
+    %% Start Trigger
+    Start([Scheduled Poll / Hiring Event])
+
     %% External Systems
     Zoho[Zoho ATS]
     Slack[Slack]
@@ -28,103 +34,130 @@ flowchart LR
     LLM[LLM Provider]
 
     %% Core Services
-    Poller[Zoho ATS Polling & Batch Manager]
-    ResumeQ[Resume Processing & Queueing]
+    Poller[Zoho ATS Polling Service]
+    ResumeQ[Resume Processing & Batch Manager]
     Eval[LLM Resume Evaluation Service]
     Comm[Slack & Email Communication Service]
-    Feedback[Feedback Collection & Formatting]
+    Feedback[Feedback Collection & Formatting Service]
     Reminder[Interview Feedback Reminder Service]
 
     %% Infrastructure
     Queue[Async Queue]
     DB[(PostgreSQL)]
 
-    %% Flows
+    %% Primary Flow (Resume Evaluation)
+    Start --> Poller
+    Poller --> Zoho
     Zoho --> Poller
     Poller --> ResumeQ
     ResumeQ --> Queue
     Queue --> Eval
+    Eval --> LLM
     Eval --> DB
     Eval --> Comm
 
+    %% Communication Flow
     Comm --> Slack
     Comm --> Email
 
+    %% Feedback Flow
     Slack --> Feedback
     Email --> Feedback
-
     Feedback --> DB
     Feedback --> Zoho
 
+    %% Reminder Flow
+    DB --> Reminder
     Reminder --> Slack
     Reminder --> Email
-
-    DB --> Reminder
 ```
 
----
+## 3. End-to-End Execution Flow
 
-
-## 3. Component Responsibilities
-
-This section describes the core modules of the Hiring Application and their individual responsibilities within the recruitment workflow.
+This section describes the complete execution flow of Re:Crude, starting from the system trigger and ending with feedback closure and reminders.
 
 ---
 
-### Zoho ATS Polling & Batch Manager
-- Periodically polls Zoho ATS using scheduled cron jobs.
-- Identifies candidates in the following stages:
-  - New
-  - Applied
-  - Custom screening required stages
-- Creates batch execution records to support traceability and auditing.
+### Workflow Trigger
+- The system is initiated by a **scheduled poll or hiring-related event**.
+- This trigger activates the Zoho ATS Polling Service to begin candidate processing.
 
 ---
 
-### Resume Processing & Queueing Module
-- Fetches resume links from storage systems such as S3 or Google Drive.
-- Validates resume accessibility and file integrity.
-- Pushes resume processing jobs into asynchronous queues.
-- Supports parallel execution for high-volume resume processing.
+### Zoho ATS Polling Service
+- Polls Zoho ATS at configured intervals.
+- Fetches candidates in eligible stages, such as:
+    - New
+    - Applied
+    - Custom screening stages
+- Detects newly added or updated candidate records.
+- Forwards eligible candidates to the Resume Processing & Batch Manager.
+
+---
+
+### Resume Processing & Batch Manager
+- Retrieves resume metadata and file references from storage.
+- Validates resume availability and file integrity.
+- Groups candidates into execution batches.
+- Pushes resume processing jobs into the asynchronous queue.
+
+---
+
+### Asynchronous Queue
+- Acts as a buffer between ingestion and evaluation.
+- Enables parallel and scalable resume processing.
+- Supports retry mechanisms and failure isolation.
 
 ---
 
 ### LLM Resume Evaluation Service
-- Fetches resume content for processing.
-- Injects job profile context into LLM prompts.
+- Consumes resume jobs from the queue.
+- Fetches and preprocesses resume content.
+- Enriches prompts with job descriptions and evaluation criteria.
+- Invokes the external **LLM Provider** for analysis.
 - Generates:
-  - Structured resume summary (skills, experience, projects)
-  - AI-based recommendation:
-    - Selected
-    - Not Selected
-    - Needs Manual Review
+   - Structured resume summaries
+   - Skill and experience extraction
+   - AI-driven recommendations:
+     - Selected
+     - Not Selected
+     - Needs Manual Review
 - Persists evaluation results in the database.
+- Triggers downstream communication workflows.
 
 ---
 
 ### Slack & Email Communication Service
-- Sends AI-generated resume summaries and recommendations to reviewers.
-- Maintains Slack thread context per candidate.
+- Sends AI-generated summaries and recommendations to reviewers.
+- Maintains Slack thread context for each candidate.
 - Captures reviewer interactions through:
+  - Slack thread replies
   - Emoji reactions
-  - Thread replies
   - Email responses
 
 ---
 
-### Feedback Collection & Formatting Module
-- Collects interviewer feedback from Slack and Email.
-- Normalizes unstructured feedback into structured formats using LLM.
-- Saves both raw and formatted feedback to:
-  - Zoho ATS
-  - Internal database
-- Generates candidate-facing communication drafts.
+### Feedback Collection & Formatting Service
+- Collects interviewer feedback from Slack and Email channels.
+- Normalizes unstructured feedback into structured formats using LLMs.
+- Stores both raw and formatted feedback in the database.
+- Pushes finalized feedback and recommendations back to Zoho ATS.
 
 ---
 
 ### Interview Feedback Reminder Service
-- Tracks pending interview feedback submissions.
-- Sends scheduled reminders via Slack and Email.
-- Ensures timely completion of interviewer feedback.
+- Periodically queries the database for pending feedback.
+- Identifies overdue or incomplete interview evaluations.
+- Sends automated reminders via Slack and Email.
+- Ensures timely completion of interview feedback.
 
 ---
+
+## 4. Architectural Characteristics
+
+- **Event-Driven** – Workflows are initiated by scheduled or system events  
+- **Asynchronous** – Queue-based processing enables parallel execution  
+- **Modular** – Services have clear, single responsibilities  
+- **Fault-Tolerant** – Failures are isolated and retryable  
+- **Human-in-the-Loop** – AI assists decision-making without replacing human judgment  
+
