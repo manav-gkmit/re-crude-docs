@@ -21,7 +21,6 @@ This design ensures **scalability, traceability, fault tolerance, and extensibil
 ---
 
 ## 2. High-Level Architecture Diagram
-
 ```mermaid
 flowchart LR
     %% Start Trigger
@@ -39,6 +38,8 @@ flowchart LR
     Eval[LLM Resume Evaluation Service]
     Comm[Slack & Email Communication Service]
     Feedback[Feedback Collection & Formatting Service]
+
+    %% Separate Service
     Reminder[Interview Feedback Reminder Service]
 
     %% Infrastructure
@@ -66,8 +67,9 @@ flowchart LR
     Feedback --> DB
     Feedback --> Zoho
 
-    %% Reminder Flow
-    DB --> Reminder
+    %% Reminder Flow (Separate from LLM Evaluation)
     Reminder --> Slack
     Reminder --> Email
+    Reminder --> Feedback
+    Reminder --> Zoho
 ```

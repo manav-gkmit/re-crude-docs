@@ -78,6 +78,18 @@ Re:Crude is built around the following principles:
 
 ---
 
+## Future Scope
+
+Re:Crude can be enhanced with the following improvements to make recruitment smarter and more efficient:
+
+- **Interview Scheduling**: Automate interview slot booking using calendar integrations.  
+- **Multi-Reviewer Consensus**: Aggregate feedback from multiple reviewers for fairer decisions.  
+- **Resume Scoring Models**: Use AI/ML to rank candidates based on skills and experience.  
+- **Hiring Analytics Dashboard**: Visualize key hiring metrics for data-driven decisions.  
+- **Fine-Tuned LLMs per Domain**: Improve resume parsing and recommendations with domain-specific models.
+
+---
+
 ## Intended Audience
 
 This documentation is intended for:
