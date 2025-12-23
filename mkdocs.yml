@@ -48,7 +48,6 @@ markdown_extensions:
 
 nav:
   - Home: index.md
-  - Overview: overview.md
   - Requirements: requirements.md
   - Architecture: architecture.md
   - Technology Stack: tech-stack.md
@@ -59,5 +58,3 @@ nav:
       - Communication Service: modules/communication.md
       - Feedback Processing: modules/feedback.md
       - Reminder Service: modules/reminders.md
-  
-  - Future Scope: future-scope.md
