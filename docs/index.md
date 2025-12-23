@@ -2,132 +2,103 @@
 
 Welcome to the **Re:Crude Technical Documentation**.
 
-**Re:Crude** is an internal recruitment automation platform designed to streamline and standardize the **end-to-end hiring workflow**. The system integrates Applicant Tracking Systems (ATS), Large Language Models (LLMs), and communication platforms to reduce manual effort, improve hiring efficiency, and enable scalable recruitment operations.
+**Re:Crude** is an internal recruitment automation platform built to streamline and standardize the **end-to-end hiring workflow**.  
+The platform integrates Applicant Tracking Systems (ATS), Large Language Models (LLMs), and communication tools to reduce manual effort, improve evaluation consistency, and enable scalable hiring operations.
 
-This documentation provides a comprehensive overview of the system architecture, workflows, integrations, and design principles behind Re:Crude.
-
----
-
-## Platform Overview
-
-Re:Crude automates the recruitment lifecycle—from resume intake to final hiring decisions—using an **event-driven and modular architecture**. It acts as an orchestration layer over multiple services, ensuring consistent data flow and automation across the hiring process.
-
-The platform integrates the following core components:
-
-### Zoho ATS Integration
-Zoho ATS serves as the **system of record** for all recruitment data, including: 
-
-- Candidates and job openings 
-
-- Application stages and interview rounds  
-
-- Hiring decisions and offer statuses   
-
-Re:Crude continuously synchronizes with Zoho ATS to: 
-
-- Fetch resumes and candidate metadata 
-
-- Update candidate status automatically  
-
-- Push structured interview feedback and AI-generated insights back into the ATS  
+This documentation serves as the **single source of truth** for understanding the system’s design, architecture, workflows, and integrations.
 
 ---
 
-### LLM-Based Resume & Feedback Evaluation
-Re:Crude leverages Large Language Models to enhance candidate evaluation by:  
+## What Re:Crude Solves
 
-- Parsing and summarizing resumes 
+Modern hiring processes involve multiple tools, manual reviews, and fragmented feedback. Re:Crude addresses these challenges by:
 
-- Extracting skills, experience, and role relevance  
-
-- Generating candidate fit assessments and recommendations  
-
-- Converting unstructured interview feedback into standardized formats   
-
-This ensures **consistency, fairness, and speed** across evaluations while reducing human bias and manual review effort.
+- Automating resume intake and screening  
+- Applying consistent AI-driven evaluation across candidates  
+- Standardizing interview feedback collection and formatting  
+- Reducing recruiter coordination and follow-ups  
+- Maintaining complete traceability across the candidate lifecycle  
 
 ---
 
-### Slack & Email Communication
-The platform integrates with Slack and Email to enable seamless communication across hiring teams:  
+## High-Level System Overview
 
-- Real-time notifications for candidate updates 
+Re:Crude acts as an **orchestration layer** over existing recruitment systems using an **event-driven and modular architecture**.
 
-- Automated interview feedback requests  
+At a high level, the platform:
 
-- Status change alerts and reminders   
+- Synchronizes candidate data and application stages from **Zoho ATS**
+- Processes resumes and interview feedback using **LLM-based evaluation pipelines**
+- Communicates with recruiters and interviewers via **Slack and Email**
+- Pushes structured insights, feedback summaries, and status updates back to the ATS
 
-This minimizes manual follow-ups and keeps recruiters and interviewers aligned throughout the hiring process.
+All major workflows are asynchronous and fault-tolerant to support high-volume hiring scenarios.
 
 ---
 
-## Key Capabilities
+## Core Capabilities
 
 ### Automated Resume Screening
-Re:Crude automatically processes incoming resumes by: 
-
-- Ingesting resumes from Zoho ATS  
-
-- Extracting key attributes such as skills, experience, education, and keywords  
-
-- Scoring candidates against predefined job requirements   
-
-This significantly reduces recruiter screening time and ensures uniform evaluation criteria across candidates.
+- Ingests resumes directly from Zoho ATS  
+- Extracts skills, experience, education, and role-specific signals  
+- Scores candidates against predefined job requirements  
 
 ---
 
-### AI-Powered Recommendations 
-Using LLM-driven analysis, the system generates: 
-
-- Concise resume summaries for quick review  
-
-- Role-fit recommendations (e.g., Strong Fit, Moderate Fit, Weak Fit)  
-
-- Highlighted strengths, gaps, and potential risks   
-
-These insights assist recruiters and hiring managers in making faster, data-backed decisions. 
+### AI-Driven Candidate Evaluation
+- Generates concise resume summaries for quick review  
+- Classifies candidates by role fit (e.g., Strong / Moderate / Weak Fit)  
+- Highlights strengths, gaps, and potential risks  
 
 ---
 
 ### Interview Feedback Automation
-Re:Crude simplifies post-interview workflows by: 
-
-- Collecting interviewer feedback via Slack or Email  
-
-- Structuring free-text feedback into predefined schemas  
-
-- Summarizing overall interview outcomes using AI   
-
-The processed feedback is automatically pushed to Zoho ATS, ensuring completeness and consistency. 
+- Collects interviewer feedback through Slack or Email  
+- Converts unstructured input into standardized schemas  
+- Produces AI-generated summaries and recommendations  
+- Automatically updates Zoho ATS with structured feedback  
 
 ---
 
-### Scalable Batch Processing
-The platform is designed to handle high-volume hiring scenarios by:  
-
-- Supporting batch resume processing  
-
-- Asynchronously evaluating large candidate pools  
-
-- Scaling AI and integration services independently   
-
-This makes Re:Crude suitable for both small hiring cycles and enterprise-level recruitment drives. 
+### Scalable & Asynchronous Processing
+- Supports batch processing for large candidate pools  
+- Enables parallel evaluation workflows  
+- Scales AI and integration services independently  
 
 ---
 
-## Documentation Scope
+## Design Principles
 
-This documentation covers:  
+Re:Crude is built around the following principles:
+
+- Event-driven and asynchronous workflows  
+- Idempotent and fault-tolerant processing  
+- Loose coupling between services and integrations  
+- Human-in-the-loop oversight for AI-driven decisions  
+
+---
+
+## Intended Audience
+
+This documentation is intended for:
+
+- Backend and platform engineers  
+- Machine learning and AI engineers  
+- Technical architects  
+- Recruitment operations and hiring stakeholders  
+
+---
+
+## Documentation Guide
+
+Use the navigation menu to explore detailed sections on:
 
 - System architecture and data flow  
-
-- API contracts and integrations  
-
+- Functional and non-functional requirements  
+- Module-level designs and workflows  
 - LLM evaluation pipelines  
+- Error handling, scalability, and deployment  
+- Planned enhancements and future scope  
 
-- Error handling and scalability considerations  
 
-- Deployment and operational guidelines   
-
-Use the navigation menu to explore each section in detail. 
 
