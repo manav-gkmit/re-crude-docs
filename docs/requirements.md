@@ -4,7 +4,7 @@ This document outlines the **functional** and **non-functional requirements** fo
 
 ---
 
-## 2.1 Functional Requirements
+## Functional Requirements
 
 ### Resume Screening & Evaluation
 The platform should automate the evaluation of candidate resumes as follows: 
@@ -86,7 +86,7 @@ The platform should automate the evaluation of candidate resumes as follows:
 
 ---
 
-## 2.2 Non-Functional Requirements
+## Non-Functional Requirements
 
 - **Scalability**: Handle large volumes of resumes efficiently using async queues. 
 

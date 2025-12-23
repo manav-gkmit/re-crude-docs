@@ -71,7 +71,7 @@ This section describes the core modules of the Hiring Application and their indi
 
 ---
 
-### 3.1 Zoho ATS Polling & Batch Manager
+### Zoho ATS Polling & Batch Manager
 - Periodically polls Zoho ATS using scheduled cron jobs.
 - Identifies candidates in the following stages:
   - New
@@ -81,7 +81,7 @@ This section describes the core modules of the Hiring Application and their indi
 
 ---
 
-### 3.2 Resume Processing & Queueing Module
+### Resume Processing & Queueing Module
 - Fetches resume links from storage systems such as S3 or Google Drive.
 - Validates resume accessibility and file integrity.
 - Pushes resume processing jobs into asynchronous queues.
@@ -89,7 +89,7 @@ This section describes the core modules of the Hiring Application and their indi
 
 ---
 
-### 3.3 LLM Resume Evaluation Service
+### LLM Resume Evaluation Service
 - Fetches resume content for processing.
 - Injects job profile context into LLM prompts.
 - Generates:
@@ -102,7 +102,7 @@ This section describes the core modules of the Hiring Application and their indi
 
 ---
 
-### 3.4 Slack & Email Communication Service
+### Slack & Email Communication Service
 - Sends AI-generated resume summaries and recommendations to reviewers.
 - Maintains Slack thread context per candidate.
 - Captures reviewer interactions through:
@@ -112,7 +112,7 @@ This section describes the core modules of the Hiring Application and their indi
 
 ---
 
-### 3.5 Feedback Collection & Formatting Module
+### Feedback Collection & Formatting Module
 - Collects interviewer feedback from Slack and Email.
 - Normalizes unstructured feedback into structured formats using LLM.
 - Saves both raw and formatted feedback to:
@@ -122,7 +122,7 @@ This section describes the core modules of the Hiring Application and their indi
 
 ---
 
-### 3.6 Interview Feedback Reminder Service
+### Interview Feedback Reminder Service
 - Tracks pending interview feedback submissions.
 - Sends scheduled reminders via Slack and Email.
 - Ensures timely completion of interviewer feedback.
