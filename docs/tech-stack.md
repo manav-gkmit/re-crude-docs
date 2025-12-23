@@ -4,41 +4,41 @@ This document provides an overview of the **technology stack** used in Re:Crude,
 
 ---
 
-## Backend
-The backend of Re:Crude is built for **high-performance API handling, asynchronous tasks, and modular service design**:
+## Technology Overview
 
-- **Python** – Primary programming language for core logic, integrations, and AI pipelines.  
-- **FastAPI** – Web framework for building RESTful APIs with automatic OpenAPI documentation.  
-- **Celery / RQ** – Asynchronous task queues for batch processing, background jobs, and periodic tasks.
-
----
-
-## Database
-The platform uses **PostgreSQL** as the primary relational database:
-
-- Stores structured candidate data, resumes, and evaluation results.
-- Supports transactional integrity and complex queries.
-- Ensures reliability and scalability for enterprise workloads.
+| Layer | Technology | Purpose |
+|------|-----------|---------|
+| **Backend Language** | Python | Core business logic, integrations, and AI pipelines |
+| **Web Framework** | FastAPI | RESTful API development with automatic OpenAPI documentation |
+| **Async Task Processing** | Celery / RQ | Background jobs, batch processing, and scheduled tasks |
+| **Relational Database** | PostgreSQL | Persistent storage for candidates, resumes, and evaluation data |
+| **Message Broker / Cache** | Redis / RabbitMQ | Task queuing, caching, and inter-service communication |
+| **Scheduling** | Cron-based Schedulers | Periodic polling of Zoho ATS and automated workflows |
 
 ---
 
-## Infrastructure
-The infrastructure components provide **scalability, reliability, and scheduling capabilities**:
+## Third-Party Integrations
 
-- **Redis / RabbitMQ** – In-memory data store and message broker for queuing, caching, and task coordination.  
-- **Cron-based Schedulers** – For automated polling of Zoho ATS, periodic reporting, and scheduled tasks.  
-
----
-
-## Third-Party Services
-Re:Crude leverages several external services to enhance functionality and integrations:
-
-- **Zoho ATS API** – For retrieving resumes, updating candidate statuses, and managing applications.  
-- **Slack API** – To send notifications and capture reviewer interactions.  
-- **SES / SendGrid** – For sending emails, reminders, and notifications to interviewers and recruiters.  
-- **OpenAI / Azure OpenAI** – For resume parsing, candidate evaluation, recommendation generation, and formatting interview feedback.
+| Service | Technology | Responsibility |
+|-------|-----------|----------------|
+| **ATS** | Zoho ATS API | Resume ingestion, candidate lifecycle management, and status updates |
+| **Communication** | Slack API | Notifications, feedback collection, and reviewer interactions |
+| **Email Service** | SES / SendGrid | Interview reminders, recruiter notifications, and alerts |
+| **LLM Provider** | OpenAI / Azure OpenAI | Resume parsing, candidate evaluation, recommendations, and feedback formatting |
 
 ---
 
-This technology stack allows Re:Crude to provide a **robust, scalable, and AI-enabled recruitment automation platform** while maintaining modularity and integration flexibility.
+## Stack Characteristics
+
+| Attribute | Description |
+|---------|-------------|
+| **Scalability** | Supports asynchronous and batch processing for high-volume hiring |
+| **Reliability** | Uses durable message queues and transactional databases |
+| **Modularity** | Loosely coupled services enable independent scaling and maintenance |
+| **AI Enablement** | Integrated LLM pipelines for evaluation and decision support |
+
+---
+
+This technology stack enables Re:Crude to operate as a **robust, scalable, and AI-driven recruitment automation platform** while maintaining flexibility for future enhancements.
+
 
